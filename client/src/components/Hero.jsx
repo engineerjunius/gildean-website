@@ -1,78 +1,85 @@
 import React from 'react'
-import { assets } from '../assets/assets'
-import Contact from './Contact'
-import { ReactTyped} from 'react-typed'
-import { motion } from 'motion/react'
-import { Navigate } from 'react-router-dom'
 import { Link } from 'react-router-dom'
+import { motion } from 'motion/react'
+import { LuArrowRight, LuCircleCheck } from 'react-icons/lu'
+import { company, services } from '../data/site'
+import BlueprintArt from './BlueprintArt'
+
+const fadeUp = (delay = 0) => ({
+  initial: { opacity: 0, y: 24 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.6, ease: 'easeOut', delay },
+})
 
 const Hero = () => {
   return (
-    <div className='container mx-auto flex flex-col md:flex-row justify-between items-center pt-32 lg:pt-54 pb-36 px-4 sm:px-6 lg:px-18'>
-      {/* left col */}
-      <div className='w-full space-y-8'>
-        <motion.div 
-        initial={{ y: 200 }}
-        animate={{ y: 0 }}
-        transition={{ type: "ease-in-out", duration: 1.5 }}
+    <section className="relative overflow-hidden bg-gradient-to-b from-navy-50 to-white">
+      <div className="blueprint-grid pointer-events-none absolute inset-0 [mask-image:linear-gradient(to_bottom,black,transparent)]" />
 
-        className='flex flex-col'>
-          <h1 className='text-4xl lg:text-6xl font-bold text-gray-800 flex flex-col items-center sm:items-start'>Welcome to <br /> <span className='text-blue-700 text-6xl lg:text-8xl'>Gildean</span> <span className='text-gray-800 text-4xl lg:text-5xl items-center sm:items-start'> Engineering Services </span></h1>
-          <p className='flex flex-col items-center sm:items-start text-lg lg:text-xl text-green-700'>"Engineered for Efficiency, Designed for Success."</p>
-        </motion.div>
-        <motion.div 
-        initial={{ y: 200 }}
-        animate={{ y: 0 }}
-        transition={{ type: "ease-in-out", duration: 2.5 }}
-        className='hidden lg:flex'>
-          <Link to={'/connect'}>
-          <button>
-            <span className='bg-blue-700 text-white px-4 absolute inline-flex animate-pulse py-2 rounded-lg hover:bg-green-600 transition duration-300 ease-in-out cursor-pointer opacity-75'
-            >Get in touch</span>
-          </button>
-          </Link>
-        </motion.div>
-      </div>
+      <div className="container-page relative grid items-center gap-14 pt-32 pb-20 lg:grid-cols-2 lg:gap-10 lg:pt-40 lg:pb-28">
+        {/* copy */}
+        <div className="text-center lg:text-left">
+          <motion.span {...fadeUp(0)} className="eyebrow">
+            <span className="h-px w-6 bg-brand-500" /> Engineering · Plotting · Printing
+          </motion.span>
 
-      {/* right col */}
-      <div className='w-full flex flex-col items-center'>
-        <motion.div 
-        initial={{ x: 700 }}
-        animate={{ x: 0 }}
-        transition={{ type: "ease-in-out", duration: 1.5, delay: 0.5 }}
-        className='flex justify-center items-center'> 
-          <img src={assets.hero} alt="" className='mx-auto w-full hover:scale-105 transition duration-300 ease-in-out'/>
-        </motion.div>
-        <div className='flex justify-center items-center pt-4'>
-          <ReactTyped 
-          strings={[
-            '..Engineering Design and Analysis',
-            '..Blueprint Plotting and Printing',
-            '..Everyday Printing Solutions',
-          ]}
-          typeSpeed={80}
-          backSpeed={70}
-          loop
-          className='text-green-700 text-2xl lg:text-4xl font-bold text-center mb-10'
-          />
+          <motion.h1
+            {...fadeUp(0.1)}
+            className="mt-5 text-4xl leading-[1.1] font-extrabold tracking-tight text-navy-900 sm:text-5xl lg:text-6xl"
+          >
+            Structural design and prints you can <span className="text-brand-600">build on.</span>
+          </motion.h1>
+
+          <motion.p {...fadeUp(0.2)} className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-navy-500 lg:mx-0">
+            {company.name} delivers engineering design and analysis, accurate blueprint plotting, and dependable
+            everyday printing, all under one roof.
+          </motion.p>
+
+          <motion.div {...fadeUp(0.3)} className="mt-9 flex flex-col justify-center gap-3 sm:flex-row lg:justify-start">
+            <Link to="/connect" className="btn btn-primary px-6">
+              Request a quote <LuArrowRight className="h-4 w-4" />
+            </Link>
+            <Link to="/services" className="btn btn-secondary px-6">
+              Explore services
+            </Link>
+          </motion.div>
+
+          <motion.ul
+            {...fadeUp(0.4)}
+            className="mt-10 flex flex-col items-center gap-3 text-sm text-navy-700 sm:flex-row sm:justify-center sm:gap-6 lg:justify-start"
+          >
+            {services.map(({ slug, short }) => (
+              <li key={slug} className="flex items-center gap-2">
+                <LuCircleCheck className="h-4 w-4 shrink-0 text-brand-600" />
+                {short}
+              </li>
+            ))}
+          </motion.ul>
         </div>
-        <motion.div 
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ amount: 'all' }}
-        transition={{ type: "ease-in-out", duration: 1.5, delay: 0.5 }}
-        className='sm:hidden flex items-center place-items-center justify-center'>
-          <Link to={'/connect'}>
-          <button className='w-full flex justify-center items-center pt-5'>
-            <span className='bg-blue-700 text-white px-4 absolute inline-flex animate-pulse py-2 rounded-lg hover:bg-green-600 transition duration-300 ease-in-out cursor-pointer opacity-75'>Get in touch</span>
-          </button>
-          </Link>
+
+        {/* illustration */}
+        <motion.div
+          initial={{ opacity: 0, x: 40 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, ease: 'easeOut', delay: 0.2 }}
+          className="relative mx-auto w-full max-w-xl"
+        >
+          <div className="rounded-3xl bg-white p-2 shadow-2xl shadow-navy-900/15 ring-1 ring-navy-100">
+            <BlueprintArt />
+          </div>
+
+          <div className="absolute -bottom-6 left-4 hidden items-center gap-3 rounded-xl bg-white px-4 py-3 shadow-lg ring-1 ring-navy-100 sm:flex">
+            <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-gold-400/15 font-mono text-sm font-medium text-gold-500">
+              1:100
+            </span>
+            <span className="text-left">
+              <span className="block text-sm font-semibold text-navy-900">Drawn to scale</span>
+              <span className="block text-xs text-navy-500">Checked before it's printed</span>
+            </span>
+          </div>
         </motion.div>
       </div>
-
-
-    </div>
-    
+    </section>
   )
 }
 

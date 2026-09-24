@@ -1,69 +1,94 @@
-import React, { useState } from 'react'
-import { assets, navLinks } from '../assets/assets'
-import { useNavigate } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { Link, NavLink, useLocation } from 'react-router-dom'
+import { LuMenu, LuX, LuArrowRight } from 'react-icons/lu'
+import { navLinks } from '../data/site'
+import Logo from './Logo'
 
-const NavItems = ({ navigate }) => {
-    return (
-        <ul className='nav-ul cursor-pointer'>
-            {navLinks.map(({ id, url, title }) => (
-                <li key={id} className='nav-li'>
-                    <span className='nav-li_a'
-                    onClick={() => navigate(url)}>
-                        {title}
-                    </span>
-                </li>
-            ))
-            }
-        </ul>
-    )
-}
+const linkClass = ({ isActive }) =>
+  `relative py-2 text-sm font-medium transition-colors ${
+    isActive ? 'text-brand-600' : 'text-navy-700 hover:text-navy-900'
+  }`
 
 const Navbar = () => {
-    const [isOpen, setIsOpen] = useState(false);
-    const toggleMenu = () => setIsOpen((prevIsOpen) => !prevIsOpen);
+  const [isOpen, setIsOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+  const { pathname } = useLocation()
 
-    const navigate = useNavigate();
+  // Close the mobile menu whenever the route changes.
+  useEffect(() => setIsOpen(false), [pathname])
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   return (
-    <nav className='fixed top-0 left-0 right-0 bg-white/90 backdrop-blur-sm z-50 border-b border-gray-100 shadow-sm'>
-        <div className='w-full container mx-auto flex gap-10 justify-between items-center py-4 px-4 sm:px-6 lg:px-10 md:h-20 h-16'>
-            {/* logo */}
-            <div>
-                <img src="/logo2.png" alt="" 
-                className='h-12'/>
-            </div>
+    <header
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
+        scrolled || isOpen ? 'border-b border-navy-100 bg-white/95 shadow-sm backdrop-blur' : 'border-b border-transparent bg-white'
+      }`}
+    >
+      <nav className="container-page flex h-18 items-center justify-between gap-8" aria-label="Main">
+        <Link to="/" aria-label="Gildean Engineering Services — Home" className="shrink-0">
+          <Logo />
+        </Link>
 
-            {/* desktop navitems */}
-            <div className='sm:flex hidden'>
-                <NavItems navigate={navigate} />
-            </div>
+        <ul className="hidden items-center gap-9 md:flex">
+          {navLinks.map(({ title, url }) => (
+            <li key={url}>
+              <NavLink to={url} end={url === '/'} className={linkClass}>
+                {title}
+              </NavLink>
+            </li>
+          ))}
+        </ul>
 
-            {/* get in touch btn */}
-            <div className='hidden md:block'>
-                <button className='bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 text-sm  transition duration-300 ease-in-out cursor-pointer'
-                onClick={() => navigate('/connect')}>
-                    Get in touch
-                </button>
-            </div>
+        <Link to="/connect" className="btn btn-primary hidden md:inline-flex">
+          Request a quote <LuArrowRight className="h-4 w-4" />
+        </Link>
 
-            {/* mobile navitems */}
-            <button onClick={toggleMenu} className='focus:outline-none sm:hidden flex cursor-pointer' aria-label='Toggle Menu'>
-                <img src={isOpen ? assets.close : assets.menu} alt="toggle" className='w-6 h-6' />
+        <button
+          type="button"
+          onClick={() => setIsOpen((open) => !open)}
+          className="-mr-2 rounded-lg p-2 text-navy-800 hover:bg-navy-50 md:hidden cursor-pointer"
+          aria-label={isOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={isOpen}
+          aria-controls="mobile-menu"
+        >
+          {isOpen ? <LuX className="h-6 w-6" /> : <LuMenu className="h-6 w-6" />}
+        </button>
+      </nav>
 
-            </button>
-
-        </div> 
-
-            <div className={`nav-sidebar ${isOpen ? 'max-h-screen' : 'max-h-0'} border-t border-gray-100 container mx-auto px-4`} >
-
-                <nav className='p-5'>
-                    <NavItems navigate={navigate} />
-                </nav>
-                <button className='hidden md:block bg-blue-500 text-white px-4 py-2 mt-5 rounded-lg hover:bg-green-600 transition duration-300 ease-in-out cursor-pointer w-full'>
-                    Get in touch
-                </button>
-            </div>
-    </nav>
+      <div
+        id="mobile-menu"
+        className={`overflow-hidden transition-[max-height] duration-300 ease-in-out md:hidden ${isOpen ? 'max-h-96' : 'max-h-0'}`}
+      >
+        <div className="container-page border-t border-navy-100 pt-3 pb-6">
+          <ul className="flex flex-col">
+            {navLinks.map(({ title, url }) => (
+              <li key={url}>
+                <NavLink
+                  to={url}
+                  end={url === '/'}
+                  className={({ isActive }) =>
+                    `block rounded-lg px-3 py-3 text-base font-medium ${
+                      isActive ? 'bg-brand-50 text-brand-700' : 'text-navy-800 hover:bg-navy-50'
+                    }`
+                  }
+                >
+                  {title}
+                </NavLink>
+              </li>
+            ))}
+          </ul>
+          <Link to="/connect" className="btn btn-primary mt-4 w-full">
+            Request a quote <LuArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+      </div>
+    </header>
   )
 }
 

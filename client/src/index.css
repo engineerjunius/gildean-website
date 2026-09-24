@@ -1,39 +1,76 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Outfit:wght@100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 
 @import "tailwindcss";
 
+@theme {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
+  --color-navy-50: #f2f5fa;
+  --color-navy-100: #e3e9f3;
+  --color-navy-200: #c3d0e4;
+  --color-navy-500: #3d5a86;
+  --color-navy-700: #1b3358;
+  --color-navy-800: #132744;
+  --color-navy-900: #0b1a30;
 
+  --color-brand-50: #eef6ff;
+  --color-brand-100: #d9ebff;
+  --color-brand-500: #2f7de1;
+  --color-brand-600: #1d64c4;
+  --color-brand-700: #1a50a0;
 
-*{
-  font-family: "Kanit", sans-serif;
-  font-weight: 500;
-  font-style: normal;
-  
+  --color-gold-400: #f2b441;
+  --color-gold-500: #e39b1b;
 }
 
-.nav-ul {
-  @apply flex flex-col gap-6 sm:flex-row md:gap-12 relative;
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-white font-sans text-navy-800 antialiased;
+  }
+
+  ::selection {
+    @apply bg-brand-100 text-navy-900;
+  }
 }
 
-.nav-li {
-  @apply text-gray-900 ml-5 hover:font-bold hover:scale-105 hover:text-indigo-800 hover:max-sm:w-full max-sm:rounded-md py-2 max-sm:px-5 tracking-[1px] relative; 
-}
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-8;
+  }
 
-.nav-li_a {
-  @apply md:text-base transition-colors;
-}
+  .eyebrow {
+    @apply inline-flex items-center gap-2 font-mono text-xs font-medium tracking-[0.18em] text-brand-600 uppercase;
+  }
 
-.nav-li::after {
-  content: ''; 
-  @apply bg-green-600 h-[3px] w-[0%] left-0 -bottom-[5px] rounded-xl absolute;
-}
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-5 py-3 text-sm font-semibold transition duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500 cursor-pointer;
+  }
 
-.nav-li:hover::after {
-  @apply w-[100%] ease-in-out duration-500;
-}
+  .btn-primary {
+    @apply bg-brand-600 text-white shadow-sm shadow-brand-600/20 hover:bg-brand-700;
+  }
 
-.nav-sidebar {
-  @apply absolute left-0 right-0 bg-white/95 backdrop-blur-2xl transition-all duration-300 ease-in-out overflow-hidden mx-auto sm:hidden block cursor-pointer z-20;
+  .btn-secondary {
+    @apply border border-navy-200 bg-white text-navy-800 hover:border-navy-500 hover:bg-navy-50;
+  }
+
+  .btn-light {
+    @apply bg-white text-navy-900 hover:bg-navy-50;
+  }
+
+  .field {
+    @apply w-full rounded-lg border border-navy-200 bg-white px-4 py-3 text-sm text-navy-900 placeholder:text-navy-500/60 transition focus:border-brand-500 focus:ring-4 focus:ring-brand-500/15 focus:outline-none;
+  }
+
+  .blueprint-grid {
+    background-image:
+      linear-gradient(to right, rgb(47 125 225 / 0.08) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(47 125 225 / 0.08) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
 }

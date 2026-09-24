@@ -1,37 +1,32 @@
 import React from 'react'
-import Navbar from './components/Navbar'
 import { Routes, Route } from 'react-router-dom'
+import Navbar from './components/Navbar'
+import Footer from './components/Footer'
+import ScrollManager from './components/ScrollManager'
+import Home from './pages/Home'
 import About from './pages/About'
 import Services from './pages/Services'
-import Contact from './components/Contact'
-import Footer from './components/Footer'
-import Home from './pages/Home'
-import { assets } from './assets/assets'
 import Connect from './pages/Connect'
+import NotFound from './pages/NotFound'
 
 const App = () => {
   return (
-    <div className='px-4 bg-white relative sm:px-10 md:px-14 lg:px-26 min-h-screen'>
-      <div className='absolute -top-28 -left-28 w-[450px] h-[450px] bg-gradient-to-tr from-green-600/40 to-indigo-300/40 rounded-full mix-blend-multiply blur-[80px] z-10 '></div>
-      
+    <div className="flex min-h-screen flex-col">
+      <ScrollManager />
+      <Navbar />
 
+      <main className="flex-1">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/connect" element={<Connect />} />
+          <Route path="/contact" element={<Connect />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </main>
 
-      
-    <Navbar />
-
-    <Routes>
-      
-      <Route path='/' element={<Home />} />
-      <Route path='/about' element={<About />} />
-      <Route path='/services' element={<Services />} />
-      <Route path='/connect' element={<Connect />} />
-      
-    </Routes>
-
-    
-
-    <Footer />
-    
+      <Footer />
     </div>
   )
 }

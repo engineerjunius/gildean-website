@@ -1,52 +1,33 @@
 import React from 'react'
-import { services } from '../assets/assets'
-import { motion } from 'motion/react'
+import { CtaBand, PageHeader, Process, ServiceCards } from '../components/Sections'
 
 const Services = () => {
   return (
-    <div className='max-w-7xl mx-auto px-4 py-16 pt-38'>
-      {/* heading text */}
-      <motion.div 
-      initial={{ y: -200 }}
-      animate={{ y: 0 }}
-      transition={{ type: "ease-in-out", duration: 1.5, delay: 0.5 }}
-      className='text-center mb-22'>
-        <h2 className='text-4xl text-indigo-800 font-bold'>Our Services</h2>
-        <p className='text-gray-500'>What we offer</p>
-      </motion.div>
+    <>
+      <PageHeader
+        eyebrow="Our services"
+        title="Engineering and printing, done right"
+        text="Choose a service below, or tell us what you need and we'll recommend the right approach."
+      />
 
-      {/* services */}
-      <motion.div 
-      initial={{ y: 300 }}
-      animate={{ y: 0 }}
-      transition={{ type: "ease-in-out", duration: 2, delay: 0.5 }}
-      className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
-        {services.map((service,index) => (
-          <div key={index} className='flex flex-col items-center'>
-            <div>
-              <div className='flex flex-col'>
-                <img src={service.photo} alt="" className='w-56 h-56 rounded-full' />
-              </div>
-            </div>
-            <h3 className='pt-2 font-medium text-2xl mb-3 text-neutral-900'>{service.title}</h3>
-            <p className='text-gray-500 text-center text-lg'>{service.description}</p>
+      <section className="container-page py-24">
+        <ServiceCards detailed />
+      </section>
+
+      <section className="bg-navy-900 py-24">
+        <div className="container-page">
+          <div className="max-w-2xl">
+            <span className="eyebrow text-gold-400">How it works</span>
+            <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">From request to delivery</h2>
           </div>
-        ))}
-      </motion.div>
+          <div className="mt-12">
+            <Process />
+          </div>
+        </div>
+      </section>
 
-      {/* button */}
-      <motion.div 
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ amount: 'all' }}
-      transition={{ type: "ease-in-out", duration: 1.5, delay: 0.5 }}
-      className='flex justify-center mt-12'>
-        <button className='bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 text-sm  transition duration-300 ease-in-out cursor-pointer animate-pulse'>
-          Get in touch
-        </button>
-      </motion.div>
-      
-    </div>
+      <CtaBand />
+    </>
   )
 }
 
