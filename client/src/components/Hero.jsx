@@ -17,7 +17,7 @@ const Hero = () => {
         transition={{ type: "ease-in-out", duration: 1.5 }}
 
         className='flex flex-col'>
-          <h1 className='text-4xl lg:text-6xl font-bold text-gray-800 flex flex-col items-center sm:items-start'>Welcome to <br /> <span className='text-blue-700 text-6xl lg:text-8xl'>Gildean</span> <span className='text-gray-800 text-4xl lg:text-5xl'> Engineering Services </span></h1>
+          <h1 className='text-4xl lg:text-6xl font-bold text-gray-800 flex flex-col items-center sm:items-start'>Welcome to <br /> <span className='text-blue-700 text-6xl lg:text-8xl'>Gildean</span> <span className='text-gray-800 text-4xl lg:text-5xl items-center sm:items-start'> Engineering Services </span></h1>
           <p className='flex flex-col items-center sm:items-start text-lg lg:text-xl text-green-700'>"Engineered for Efficiency, Designed for Success."</p>
         </motion.div>
         <motion.div 
